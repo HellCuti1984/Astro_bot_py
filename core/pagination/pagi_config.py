@@ -1,0 +1,12 @@
+TEXT = ''
+CALLBACK_DATA = ''
+CONTENT = []
+
+# КНОПКИ
+INLINE_BUTTONS = []
+CUSTOM_BUTTON = None
+IS_BACK_MENU_BTN = False
+
+MIN_INDEX = 0
+MAX_INDEX = len(CONTENT) - 1
+
