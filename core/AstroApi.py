@@ -6,13 +6,18 @@ from core.market import market
 from config import ASTRO_TOKEN
 
 
+def get_astro_url(url):
+    return f'https://astroproxy.com/api/v1/{url}&token={ASTRO_TOKEN}'
+
+
 def post_json(url):
-    url = f'https://astroproxy.com/api/v1/{url}&token={ASTRO_TOKEN}'
-    requests.post(url)
+    url = get_astro_url(url)
+    data = requests.post(url).json()
+    return data
 
 
 def get_json(url):
-    url = f'https://astroproxy.com/api/v1/{url}&token={ASTRO_TOKEN}'
+    url = get_astro_url(url)
     data = requests.get(url).json()
     data_code = 0
     if data['status'] == 'ok':
@@ -22,6 +27,18 @@ def get_json(url):
         return data['data']
     else:
         return None
+
+
+def delete_req(url):
+    url = get_astro_url(url)
+    data = requests.delete(url).json()
+    return data
+
+
+def patch_req(url):
+    url = get_astro_url(url)
+    data = requests.patch(url).json()
+    return data
 
 
 def get_calculate(city='Moscow', volume=100, count=1):
@@ -57,7 +74,7 @@ def get_cities_from_file():
 # region Порты
 
 def get_ports_from_api():
-    url_req = 'ports?'
+    url_req = 'ports?tab=all'
     data = get_json(url_req)
     return data['ports']
 
@@ -67,7 +84,16 @@ def get_ports_from_file():
     return jsons.read_from_file(path_to_ports_file)
 
 
-# endregion
+def get_archived_ports():
+    url_req = 'ports?tab=archived'
+    data = get_json(url_req)
+    return data['ports']
+
+
+def update_port_file():
+    path_to_priority_cities_file = jsons.FILES['path_to_ports_file']
+    cities = get_ports_from_api()
+    jsons.write_to_file(cities, path_to_priority_cities_file)
 
 
 def post_create_port(name='',
@@ -80,6 +106,24 @@ def post_create_port(name='',
     url = f'ports?name={name}&network={network}&country={country}&city={city}&rotation_by=time&rotation_time_type=hours' \
           f'&rotation_time=1&is_unlimited=0&volume={volume}&username={username}&password={password}'
 
-    for i in range(market.COUNT):
-        post_json(url)
+    is_ok = False
+    for i in range(int(market.COUNT)):
+        status = post_json(url)['status']
+        if status != 'ok':
+            is_ok = False
+        else:
+            is_ok = True
         time.sleep(1)
+    return is_ok
+
+
+
+def post_renew_port(id):
+    url = f'ports/{id}/renew?volume=0.1'
+    return post_json(url)
+
+
+def delete_port(id):
+    url = f'ports/{id}?'
+    return delete_req(url)
+# endregion

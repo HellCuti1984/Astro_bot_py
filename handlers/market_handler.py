@@ -81,12 +81,15 @@ async def final_buy_port(call: CallbackQuery):
     await call.message.edit_text(text=f'ОЖИДАЙТЕ. ПОКУПКА {market.COUNT} ПОРТОВ...')
 
     # ПОКУПКА ПОРТА. ВО ВРЕМЯ ТЕСТИРОВАНИЯ ЛУЧШЕ НАХУЙ В КОММЕНТАРИЙ ОТПРАВИТЬ
-    post_create_port(name=market.LOT_NAME,
-                     city=market.LOT_NAME,
-                     volume=traffic_count[market.TRAFFIC_INDEX])
+    status = post_create_port(name=market.LOT_NAME,
+                              city=market.LOT_NAME,
+                              volume=traffic_count[market.TRAFFIC_INDEX])
 
-    await call.answer(text=f'Порт: {market.LOT_NAME} успешно куплен.\nЦена: {get_traffic_port_price()}',
-                      show_alert=True)
+    if status is True:
+        await call.message.answer(text=f'Порт: {market.LOT_NAME} успешно куплен.\nЦена: {get_traffic_port_price()}')
+    else:
+        await call.message.answer(text=f'ОШИБКА ПОКУПКИ. НЕДОСТАТОЧНО СРЕДСТВ')
+
     time.sleep(2)
     await call.message.edit_text(text=pagi_config.TEXT,
                                  reply_markup=get_pagi_cities_markup())

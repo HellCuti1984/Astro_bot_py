@@ -1,5 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from core.Archive import status
+
 
 def menu_markup():
     # Создание клавиатуры
@@ -20,7 +22,7 @@ def menu_markup():
                 InlineKeyboardButton(text='Добавить город', callback_data='add_priority_cities')
             ],
             [
-                InlineKeyboardButton(text='ТЕСТОВАЯ КНОПКА', callback_data='FOR_TESTS')
+                InlineKeyboardButton(text=status, callback_data='renew_archived')
             ]
         ]
     )
