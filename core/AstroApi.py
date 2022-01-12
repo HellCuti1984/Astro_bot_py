@@ -117,7 +117,6 @@ def post_create_port(name='',
     return is_ok
 
 
-
 def post_renew_port(id):
     url = f'ports/{id}/renew?volume=0.1'
     return post_json(url)

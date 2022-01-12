@@ -1,7 +1,7 @@
 from aiogram import Dispatcher, types
 
-import config
 from core import AstroApi
+import config
 from keyboards import menu
 
 
@@ -11,8 +11,7 @@ def start_message():
     traffic_cost = calc['traffic_cost'] + port_cost
     port_and_traffic = calc['port_and_traffic']
 
-    return "Приветствую. \n\n" \
-           "Цены: \n" \
+    return "Цены: \n" \
            f"     \u2022 Порт: {port_cost} руб.\n" \
            f"     \u2022 Трафик (100 Мб): {round(traffic_cost - port_cost, 2)} руб.\n" \
            f"     \u2022 Порт+трафик: {port_and_traffic} руб.\n"

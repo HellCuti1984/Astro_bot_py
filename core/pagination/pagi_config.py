@@ -9,4 +9,3 @@ IS_BACK_MENU_BTN = False
 
 MIN_INDEX = 0
 MAX_INDEX = len(CONTENT) - 1
-

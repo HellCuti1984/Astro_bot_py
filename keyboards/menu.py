@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from core.Archive import status
+from core import AstroApi
 
 
 def menu_markup():
@@ -19,10 +19,10 @@ def menu_markup():
             ],
             [
                 InlineKeyboardButton(text='Список приор. город', callback_data='priority_cities'),
-                InlineKeyboardButton(text='Добавить город', callback_data='add_priority_cities')
+                InlineKeyboardButton(text='Запустить проверку городов', callback_data='start_cities_check')
             ],
             [
-                InlineKeyboardButton(text=status, callback_data='renew_archived')
+                InlineKeyboardButton(text=f'ОБНОВИТЬ АРХИВ ({len(AstroApi.get_archived_ports())} шт.)', callback_data='renew_archived')
             ]
         ]
     )

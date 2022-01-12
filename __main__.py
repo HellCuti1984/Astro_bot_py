@@ -1,10 +1,13 @@
+import sys
+sys.path.append('../../')
+
 import asyncio
 import logging
 
+import config
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-import config
 from handlers import register_handlers
 
 logger = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ from aiogram import types, Dispatcher
 
 async def bot_help(message: types.Message):
     text = ("Список команд: ",
-            "/start - Начать диалог",
+            "/start - Открыть меню",
             "/help - Получить справку")
 
     await message.answer("\n".join(text))
